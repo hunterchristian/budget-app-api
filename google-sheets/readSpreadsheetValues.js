@@ -63,15 +63,21 @@ function getApiKey() {
 }
 
 const readSpreadsheetValues = () => new Promise((resolve, reject) => {
-  const jwt = getJwt();
-  const apiKey = getApiKey();
+  const jwtClient = getJwt();
+  jwtClient.authorize(function (err, tokens) {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log("Successfully connected!");
+    }
+   });
 
   const sheets = google.sheets({ version: 'v4' });
   sheets.spreadsheets.values.get({
     spreadsheetId,
     range: 'Summary!F3:H1000',
-    auth: jwt,
-    key: apiKey,
+    auth: jwtClient,
   }, (err, result) => {
     if (err) {
       console.log(err);
