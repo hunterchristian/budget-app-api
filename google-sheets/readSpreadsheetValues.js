@@ -60,7 +60,24 @@ function getJwt() {
   );
 }
 
-const readSpreadsheetValues = () => new Promise((resolve, reject) => {
+const getSpreadsheetRange = (range, jwtClient) => new Promise((resolve, reject) => {
+  const sheets = google.sheets({ version: 'v4' });
+  sheets.spreadsheets.values.get({
+    spreadsheetId: SPREADSHEET_ID,
+    range,
+    auth: jwtClient,
+  }, (err, result) => {
+    if (err) {
+      console.log(err);
+      reject(err);
+    } else {
+      console.log(`Reading ${ range } from Google sheet...`);
+      resolve(result.data.values);
+    }
+  });
+});
+
+const readSpreadsheetValues = () => new Promise(async (resolve, reject) => {
   const jwtClient = getJwt();
   jwtClient.authorize(function (err, tokens) {
     if (err) {
@@ -69,29 +86,33 @@ const readSpreadsheetValues = () => new Promise((resolve, reject) => {
     } else {
       console.log("Successfully connected!");
     }
-   });
-
-  const sheets = google.sheets({ version: 'v4' });
-  sheets.spreadsheets.values.get({
-    spreadsheetId: SPREADSHEET_ID,
-    range: 'Summary!F3:H1000',
-    auth: jwtClient,
-  }, (err, result) => {
-    if (err) {
-      console.log(err);
-      reject(err);
-    } else {
-      console.log('Read request to Google Sheets succeeded, updating cached spreadsheet values.');
-      const liveSpreadsheetValues = formatSpreadsheetValues(result.data.values);
-      lastReadTimestampMillis = Date.now();
-      writeDataToFile({
-        cachedSpreadsheetValues: liveSpreadsheetValues,
-        lastReadTimestampMillis,
-      });
-
-      resolve(liveSpreadsheetValues);
-    }
   });
+
+  const daySummary = await getSpreadsheetRange('Summary!A3:B1000', jwtClient);
+  const weekSummary = await getSpreadsheetRange('Summary!C3:E1000', jwtClient);
+  const monthSummary = await getSpreadsheetRange('Summary!F3:H1000', jwtClient);
+
+  console.log('All read requests to Google Sheets succeeded, updating cached spreadsheet values.');
+
+  const liveSpreadsheetValues = {
+    daySummary: {
+      transactions: daySummary.map(v => ({
+        description: v[0],
+        amount: v[1], 
+      })),
+    },
+    weekSummary: { transactions: formatSpreadsheetValues(weekSummary) },
+    monthSummary: { transactions: formatSpreadsheetValues(monthSummary) },
+  };
+
+  lastReadTimestampMillis = Date.now();
+  cachedSpreadsheetValues = liveSpreadsheetValues;
+  writeDataToFile({
+    cachedSpreadsheetValues: liveSpreadsheetValues,
+    lastReadTimestampMillis,
+  });
+
+  resolve(liveSpreadsheetValues);
 });
 
 module.exports = () => new Promise(async resolve => {
