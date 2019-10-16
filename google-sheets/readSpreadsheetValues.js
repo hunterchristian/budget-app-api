@@ -5,7 +5,7 @@ const getEnvVarIfDefined = require('@hunterhod/env-var-not-defined');
 
 const SPREADSHEET_ID = getEnvVarIfDefined('SPREADSHEET_ID');
 const GOOGLE_API_CLIENT_EMAIL = getEnvVarIfDefined('GOOGLE_API_CLIENT_EMAIL');
-const GOOGLE_API_PRIVATE_KEY = getEnvVarIfDefined('GOOGLE_API_PRIVATE_KEY');
+const GOOGLE_API_PRIVATE_KEY = JSON.parse(`{ "key": "${ getEnvVarIfDefined('GOOGLE_API_PRIVATE_KEY') }" }`).key;
 
 const MIN_TIME_BETWEEN_READS_MILLIS = 60 * 60 * 1000; // one hour
 
@@ -58,11 +58,6 @@ function getJwt() {
     GOOGLE_API_CLIENT_EMAIL, null, GOOGLE_API_PRIVATE_KEY,
     ['https://www.googleapis.com/auth/spreadsheets']
   );
-}
-
-function getApiKey() {
-  const apiKeyFile = require("./api_key.json");
-  return apiKeyFile.key;
 }
 
 const readSpreadsheetValues = () => new Promise((resolve, reject) => {
