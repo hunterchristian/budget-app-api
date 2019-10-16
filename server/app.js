@@ -4,6 +4,11 @@ const readSpreadsheetValues = require('../google-sheets/readSpreadsheetValues');
 
 const app = express();
 
+app.get('/', async (req, res) => {
+  const values = await readSpreadsheetValues();
+  res.json({ ...values });
+});
+
 app.get('/day', async (req, res) => {
   const values = await readSpreadsheetValues();
   res.json({ transactions: values.daySummary.transactions });
