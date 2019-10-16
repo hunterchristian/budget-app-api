@@ -1,8 +1,12 @@
 
 const fs = require('fs-extra');
 const { google } = require('googleapis');
+const getEnvVarIfDefined = require('@hunterhod/env-var-not-defined');
 
-const spreadsheetId = process.env.SPREADSHEET_ID;
+const SPREADSHEET_ID = getEnvVarIfDefined('SPREADSHEET_ID');
+const GOOGLE_API_CLIENT_EMAIL = getEnvVarIfDefined('GOOGLE_API_CLIENT_EMAIL');
+const GOOGLE_API_PRIVATE_KEY = getEnvVarIfDefined('GOOGLE_API_PRIVATE_KEY');
+
 const MIN_TIME_BETWEEN_READS_MILLIS = 60 * 60 * 1000; // one hour
 
 const DATA_FILE_NAME = `${ __dirname }/tmp/data.json`;
@@ -50,9 +54,8 @@ function writeDataToFile(data) {
 }
 
 function getJwt() {
-  const credentials = require("./credentials.json");
   return new google.auth.JWT(
-    credentials.client_email, null, credentials.private_key,
+    GOOGLE_API_CLIENT_EMAIL, null, GOOGLE_API_PRIVATE_KEY,
     ['https://www.googleapis.com/auth/spreadsheets']
   );
 }
@@ -75,7 +78,7 @@ const readSpreadsheetValues = () => new Promise((resolve, reject) => {
 
   const sheets = google.sheets({ version: 'v4' });
   sheets.spreadsheets.values.get({
-    spreadsheetId,
+    spreadsheetId: SPREADSHEET_ID,
     range: 'Summary!F3:H1000',
     auth: jwtClient,
   }, (err, result) => {

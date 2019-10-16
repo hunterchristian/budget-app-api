@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hunterhod/env-var-not-defined": "^1.2.1",
     "express": "^4.17.1",
     "fs-extra": "^8.1.0",
     "googleapis": "^39.2.0"
