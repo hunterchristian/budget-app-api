@@ -5,4 +5,4 @@ const exitIfEnvVarNotSpecified = envVar => {
   }
 };
 
-module.exports = exitIfEnvVarNotSpecified;
+export default exitIfEnvVarNotSpecified;

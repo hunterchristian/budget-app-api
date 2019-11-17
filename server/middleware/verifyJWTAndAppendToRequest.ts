@@ -1,4 +1,4 @@
-const checkRequestForValidToken = require('../util/jwt/checkRequestForValidToken');
+import checkRequestForValidToken from '../util/jwt/checkRequestForValidToken';
 
 const verifyJWTAndAppendToRequest = async (req, res, next) => {
   try {
@@ -9,4 +9,4 @@ const verifyJWTAndAppendToRequest = async (req, res, next) => {
   }
 };
 
-module.exports = verifyJWTAndAppendToRequest;
+export default verifyJWTAndAppendToRequest;

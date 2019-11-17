@@ -1,9 +1,6 @@
-const getTokenFromRequest = require('./getTokenFromRequest');
-const verifyToken = require('./verifyToken');
-const {
-  sendAuthTokenInvalidResponse,
-  sendAuthTokenMissingResponse,
-} = require('../responses');
+import getTokenFromRequest from './getTokenFromRequest';
+import verifyToken from './verifyToken';
+import { sendAuthTokenInvalidResponse, sendAuthTokenMissingResponse } from '../responses';
 
 const checkRequestForValidToken = (req, res) => new Promise(async (resolve, reject) => {
   const token = getTokenFromRequest(req);
@@ -20,4 +17,4 @@ const checkRequestForValidToken = (req, res) => new Promise(async (resolve, reje
   }
 });
 
-module.exports = checkRequestForValidToken;
+export default checkRequestForValidToken;

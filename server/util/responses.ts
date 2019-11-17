@@ -1,10 +1,10 @@
-const sendMissingParamResponse = (res, param) =>
+export const sendMissingParamResponse = (res, param) =>
   res.status(400).json({
     success: false,
     message: `Missing parameter in request body: ${ param }`
   });
 
-function sendAuthTokenMissingResponse(res) {
+export function sendAuthTokenMissingResponse(res) {
   res.set('WWW-Authenticate', 'Bearer realm="User visible", charset="UTF-8"');
   res.status(401).json({
     success:false,
@@ -12,7 +12,7 @@ function sendAuthTokenMissingResponse(res) {
   });
 }
 
-function sendAuthTokenInvalidResponse(res) {
+export function sendAuthTokenInvalidResponse(res) {
   res.set('WWW-Authenticate', 'Bearer realm="User visible", charset="UTF-8"');
   res.status(401).json({
     success:false,
@@ -20,23 +20,15 @@ function sendAuthTokenInvalidResponse(res) {
   });
 }
 
-const sendIncorrectCredentialsResponse = (res, param) =>
+export const sendIncorrectCredentialsResponse = res =>
   res.status(403).json({
     success: false,
     message: 'Incorrect username or password'
   });
 
-const sendAuthSuccessfulResponseWithToken = (res, token) =>
+export const sendAuthSuccessfulResponseWithToken = (res, token) =>
   res.json({
     success: true,
     message: 'Authentication successful',
     token
   });
-
-module.exports = {
-  sendMissingParamResponse,
-  sendAuthTokenMissingResponse,
-  sendAuthTokenInvalidResponse,
-  sendIncorrectCredentialsResponse,
-  sendAuthSuccessfulResponseWithToken
-};

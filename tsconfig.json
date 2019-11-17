@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "target": "ES2018",
+      "outDir": "build",
+      "rootDir": "server",
+      "jsx": "react",
+      "esModuleInterop": true
+  },
+  "exclude": [
+    "node_modules/"
+  ]
+}

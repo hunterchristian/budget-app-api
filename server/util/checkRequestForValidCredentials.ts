@@ -1,8 +1,5 @@
-const exitIfEnvVarNotSpecified = require('./exitIfEnvVarNotSpecified');
-const {
-  sendMissingParamResponse,
-  sendIncorrectCredentialsResponse,
-} = require('./responses');
+import exitIfEnvVarNotSpecified from './exitIfEnvVarNotSpecified';
+import { sendMissingParamResponse, sendIncorrectCredentialsResponse } from './responses';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 exitIfEnvVarNotSpecified('ADMIN_USERNAME');
@@ -27,4 +24,4 @@ function checkRequestForValidCredentials(req, res) {
   return null;
 }
 
-module.exports = checkRequestForValidCredentials;
+export default checkRequestForValidCredentials;

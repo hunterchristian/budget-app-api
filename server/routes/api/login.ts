@@ -1,5 +1,5 @@
-const generateSignedJWTFromRequest = require('../../../../util/jwt/generateSignedJWTFromRequest');
-const { sendAuthSuccessfulResponseWithToken } = require('../../../../util/responses');
+import generateSignedJWTFromRequest from '../../util/jwt/generateSignedJWTFromRequest';
+import { sendAuthSuccessfulResponseWithToken } from '../../util/responses';
 
 function loginHandler(req, res) {
   try {
@@ -10,4 +10,4 @@ function loginHandler(req, res) {
   }
 }
 
-module.exports = loginHandler;
+export default loginHandler;

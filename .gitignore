@@ -1,6 +1,9 @@
 node_modules/
+build/
 google-sheets/tmp/
 **/credentials.json
 **/api_key.json
 npm-debug.log
 .history/
+.vscode/
+.env
