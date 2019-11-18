@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import onlyAllowWhitelistedOrigins from './middleware/onlyAllowWhitelistedOrigins';
 
 // Load environment variables from a local .env file, if present
 dotenv.config();
@@ -13,6 +14,15 @@ const app = express();
 
 // log all requests to the server
 app.use(morgan('combined'));
+
+// Restrict API access to whitelisted origins
+const allowedOrigins = [
+  'https://budget-view-hunterhod.herokuapp.com'
+];
+if (!!process.env.IS_DEV) {
+  allowedOrigins.push('http://localhost:3000');
+}
+app.use(onlyAllowWhitelistedOrigins(allowedOrigins, !!process.env.IS_DEV));
 
 // parse application/x-www-form-urlencoded from request body
 app.use(bodyParser.urlencoded({ extended: true }));
