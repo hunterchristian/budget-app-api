@@ -22,7 +22,7 @@ const allowedOrigins = [
 if (!!process.env.IS_DEV) {
   allowedOrigins.push('http://localhost:3000');
 }
-app.use(onlyAllowWhitelistedOrigins(allowedOrigins, !!process.env.IS_DEV));
+app.use(onlyAllowWhitelistedOrigins(allowedOrigins));
 
 // parse application/x-www-form-urlencoded from request body
 app.use(bodyParser.urlencoded({ extended: true }));

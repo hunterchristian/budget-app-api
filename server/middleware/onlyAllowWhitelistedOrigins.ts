@@ -1,6 +1,6 @@
 import cors from 'cors';
 
-const onlyAllowWhitelistedOrigins = (allowedOrigins, isDev) => cors({
+const onlyAllowWhitelistedOrigins = allowedOrigins => cors({
   origin: function(origin, callback){
     // allow requests with no origin 
     // (like mobile apps or curl requests)
@@ -14,7 +14,7 @@ const onlyAllowWhitelistedOrigins = (allowedOrigins, isDev) => cors({
 
     return callback(null, true);
   },
-  credentials: isDev,
+  credentials: true,
 });
 
 export default onlyAllowWhitelistedOrigins;
