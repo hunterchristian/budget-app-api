@@ -90,13 +90,16 @@ const readSpreadsheetValues = () => new Promise(async (resolve, reject) => {
 
   const dayRemaining = await getSpreadsheetRange('Summary!B1', jwtClient);
   const daySpent = await getSpreadsheetRange('Summary!B2', jwtClient);
-  const daySummary = await getSpreadsheetRange('Summary!A3:B1000', jwtClient);
+  // getSpreadsheetRange will return undefined if no values are found
+  const daySummary = await getSpreadsheetRange('Summary!A3:B1000', jwtClient) || [];
   const weekRemaining = await getSpreadsheetRange('Summary!E1', jwtClient);
   const weekSpent = await getSpreadsheetRange('Summary!E2', jwtClient);
-  const weekSummary = await getSpreadsheetRange('Summary!C3:E1000', jwtClient);
+  // getSpreadsheetRange will return undefined if no values are found
+  const weekSummary = await getSpreadsheetRange('Summary!C3:E1000', jwtClient) || [];
   const monthRemaining = await getSpreadsheetRange('Summary!H1', jwtClient);
   const monthSpent = await getSpreadsheetRange('Summary!H2', jwtClient);
-  const monthSummary = await getSpreadsheetRange('Summary!F3:H1000', jwtClient);
+  // getSpreadsheetRange will return undefined if no values are found
+  const monthSummary = await getSpreadsheetRange('Summary!F3:H1000', jwtClient) || [];
 
   console.log('All read requests to Google Sheets succeeded, updating cached spreadsheet values.');
 
