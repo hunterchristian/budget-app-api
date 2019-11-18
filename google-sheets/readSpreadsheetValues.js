@@ -88,21 +88,37 @@ const readSpreadsheetValues = () => new Promise(async (resolve, reject) => {
     }
   });
 
+  const dayRemaining = await getSpreadsheetRange('Summary!B1', jwtClient);
+  const daySpent = await getSpreadsheetRange('Summary!B2', jwtClient);
   const daySummary = await getSpreadsheetRange('Summary!A3:B1000', jwtClient);
+  const weekRemaining = await getSpreadsheetRange('Summary!E1', jwtClient);
+  const weekSpent = await getSpreadsheetRange('Summary!E2', jwtClient);
   const weekSummary = await getSpreadsheetRange('Summary!C3:E1000', jwtClient);
+  const monthRemaining = await getSpreadsheetRange('Summary!H1', jwtClient);
+  const monthSpent = await getSpreadsheetRange('Summary!H2', jwtClient);
   const monthSummary = await getSpreadsheetRange('Summary!F3:H1000', jwtClient);
 
   console.log('All read requests to Google Sheets succeeded, updating cached spreadsheet values.');
 
   const liveSpreadsheetValues = {
     daySummary: {
+      dayRemaining,
+      daySpent,
       transactions: daySummary.map(v => ({
         description: v[0],
         amount: v[1], 
       })),
     },
-    weekSummary: { transactions: formatSpreadsheetValues(weekSummary) },
-    monthSummary: { transactions: formatSpreadsheetValues(monthSummary) },
+    weekSummary: {
+      weekRemaining,
+      weekSpent,
+      transactions: formatSpreadsheetValues(weekSummary),
+    },
+    monthSummary: {
+      monthRemaining,
+      monthSpent,
+      transactions: formatSpreadsheetValues(monthSummary),
+    },
   };
 
   lastReadTimestampMillis = Date.now();
