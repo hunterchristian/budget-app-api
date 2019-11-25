@@ -17,7 +17,7 @@ app.use(morgan('combined'));
 
 // Restrict API access to whitelisted origins
 const allowedOrigins = [
-  'https://budget-view-hunterhod.herokuapp.com'
+  'https://budget-app-hunterhod.appspot.com'
 ];
 if (!!process.env.IS_DEV) {
   allowedOrigins.push('http://localhost:3000');
