@@ -17,7 +17,8 @@ app.use(morgan('combined'));
 
 // Restrict API access to whitelisted origins
 const allowedOrigins = [
-  'https://budget-app-hunterhod.appspot.com'
+  'https://budget-app-hunterhod.appspot.com',
+  'https://piggybank.dev',
 ];
 if (!!process.env.IS_DEV) {
   allowedOrigins.push('http://localhost:3000');
