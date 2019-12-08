@@ -1,0 +1,8 @@
+name: publish
+
+- uses: actions-hub/gcloud@master
+  env:
+    PROJECT_ID: test
+    APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+  with:
+    args: app deploy
