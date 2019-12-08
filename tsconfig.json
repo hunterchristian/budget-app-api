@@ -1,13 +1,12 @@
 {
   "compilerOptions": {
-      "module": "commonjs",
-      "target": "ES2018",
-      "outDir": "build",
-      "rootDir": "server",
-      "jsx": "react",
-      "esModuleInterop": true
+    "module": "commonjs",
+    "target": "ES2018",
+    "outDir": "build",
+    "rootDir": "src",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "typeRoots": ["./node_modules/@types", "src/types"]
   },
-  "exclude": [
-    "node_modules/"
-  ]
+  "exclude": ["node_modules/"]
 }

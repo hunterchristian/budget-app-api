@@ -4,10 +4,10 @@ import onlyAllowWhitelistedOrigins from './middleware/onlyAllowWhitelistedOrigin
 // Load environment variables from a local .env file, if present
 dotenv.config();
 
-import express from 'express';
 import bodyParser from 'body-parser';
-import morgan from 'morgan';
+import express from 'express';
 import createError from 'http-errors';
+import morgan from 'morgan';
 import apiRouter from './routes/api';
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(morgan('combined'));
 // Restrict API access to whitelisted origins
 const allowedOrigins = [
   'https://budget-app-hunterhod.appspot.com',
+  'https://www.piggybank.dev',
   'https://piggybank.dev',
 ];
 if (!!process.env.IS_DEV) {

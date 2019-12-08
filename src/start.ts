@@ -1,9 +1,8 @@
 /**
  * Module dependencies.
  */
-import app from './app';
-
 import * as http from 'http';
+import app from './app';
 
 /**
  * Get port from environment and store in Express.
@@ -28,14 +27,12 @@ server.listen(port);
  * Event listener for HTTP server "error" event.
  */
 
-function onError(error) {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
-  const bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+  const bind = typeof port === 'string' ? 'Pipe ' + port : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -58,8 +55,6 @@ function onError(error) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+  const bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   console.log('Listening on ' + bind);
 }

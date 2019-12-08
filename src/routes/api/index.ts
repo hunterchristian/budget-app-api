@@ -1,10 +1,10 @@
 import express from 'express';
-import verifyJWTAndAppendToRequest from '../../middleware/verifyJWTAndAppendToRequest';
 import readSpreadsheetValues from '../../../google-sheets/readSpreadsheetValues';
-import loginHandler from './login';
+import verifyJWTAndAppendToRequest from '../../middleware/verifyJWTAndAppendToRequest';
 import dayHandler from './day';
-import weekHandler from './week';
+import loginHandler from './login';
 import monthHandler from './month';
+import weekHandler from './week';
 
 const apiRouter = express.Router();
 
@@ -15,6 +15,8 @@ apiRouter.get('/week', verifyJWTAndAppendToRequest, weekHandler);
 apiRouter.get('/month', verifyJWTAndAppendToRequest, monthHandler);
 
 apiRouter.get('/', verifyJWTAndAppendToRequest, async (req, res) => {
+  // TODO: remove once migrated to postgres
+  // tslint:disable-next-line: no-unsafe-any
   const values = await readSpreadsheetValues();
   res.json({ ...values });
 });
